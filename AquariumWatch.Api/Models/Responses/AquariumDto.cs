@@ -1,8 +1,8 @@
 ﻿using AquariumWatch.Data.Enums;
 
-namespace AquariumWatch.Data.Entities
+namespace AquariumWatch.Api.Models.Responses
 {
-    public class Aquarium
+    public class AquariumDto
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
