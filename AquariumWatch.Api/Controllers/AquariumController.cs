@@ -4,11 +4,8 @@ using AquariumWatch.Api.Models.Responses;
 using AquariumWatch.Data;
 using AquariumWatch.Data.Entities;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-using System.Threading;
 
 namespace AquariumWatch.Api.Controllers
 {
@@ -49,7 +46,7 @@ namespace AquariumWatch.Api.Controllers
             _dbContext.Aquariums.Add(aquarium);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return CreatedAtAction(nameof(GetAquariumById), new { id = aquarium.Id }, request);
+            return CreatedAtAction(nameof(GetAquariumById), new { id = aquarium.Id }, aquarium);
         }
 
         [HttpGet(RouteConstants.AquariumById)]
@@ -63,6 +60,27 @@ namespace AquariumWatch.Api.Controllers
                 .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 
             return aquarium == null ? BadRequest() : _mapper.Map<AquariumDto>(aquarium);
+        }
+
+        [HttpDelete(RouteConstants.AquariumById)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> DeleteAquarium(int id, CancellationToken cancellationToken)
+        {
+            Aquarium? aquarium = await _dbContext
+                .Aquariums
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+            if (aquarium is not null)
+            {
+                _dbContext.Aquariums.Remove(aquarium);
+                await _dbContext.SaveChangesAsync(cancellationToken);
+
+                return NoContent();
+            }
+
+            return BadRequest();
         }
     }
 }
