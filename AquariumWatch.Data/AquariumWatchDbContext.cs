@@ -5,7 +5,7 @@ namespace AquariumWatch.Data
 {
     public class AquariumWatchDbContext : DbContext
     {
-        public AquariumWatchDbContext(DbContextOptions options) : base(options)
+        public AquariumWatchDbContext(DbContextOptions<AquariumWatchDbContext> options) : base(options)
         {
         }
 

@@ -1,6 +1,7 @@
 ﻿using AquariumWatch.Api.Models.Requests;
 using AquariumWatch.Api.Models.Responses;
 using AquariumWatch.Data.Entities;
+using AquariumWatch.Domain.Features.Aquariums;
 using AutoMapper;
 
 namespace AquariumWatch.Api.Mapping
@@ -15,7 +16,7 @@ namespace AquariumWatch.Api.Mapping
 
         private void MapRequestDtos()
         {
-            CreateMap<CreateAquariumRequestDto, Aquarium>();
+            CreateMap<CreateAquariumRequestDto, CreateAquarium.Request>();
         }
 
         private void MapResponseDtos()

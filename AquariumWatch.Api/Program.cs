@@ -1,5 +1,7 @@
 using AquariumWatch.Data;
+using AquariumWatch.Domain.Features.Aquariums;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<AquariumWatchDbContext>(opt =>
-    opt.UseInMemoryDatabase("Aquarium"));
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("AquariumWatch")));
 
 builder.Services.AddOpenApiDocument();
 
@@ -20,6 +22,11 @@ builder.Services.AddCors(o => o.AddDefaultPolicy(policy =>
 }));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssemblies(typeof(CreateAquarium).Assembly);
+});
 
 var app = builder.Build();
 
