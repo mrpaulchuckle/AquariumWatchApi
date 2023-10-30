@@ -24,7 +24,7 @@ namespace AquariumWatch.Api.Controllers
         }
 
         [HttpGet(RouteConstants.Aquariums)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(AquariumDto[]), StatusCodes.Status200OK)]
         public async Task<IEnumerable<AquariumDto>> GetAquariumsAsync(CancellationToken cancellationToken)
         {
             IEnumerable<Aquarium> aquariums = await sender.Send(new GetAquariums.Request(), cancellationToken);
@@ -41,7 +41,7 @@ namespace AquariumWatch.Api.Controllers
         }
 
         [HttpGet(RouteConstants.AquariumById)]
-        [ProducesResponseType(typeof(Aquarium), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(AquariumDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<AquariumDto>> GetAquariumById(int id, CancellationToken cancellationToken)
         {
