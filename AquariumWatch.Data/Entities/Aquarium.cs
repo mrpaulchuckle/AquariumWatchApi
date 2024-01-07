@@ -13,5 +13,6 @@ namespace AquariumWatch.Data.Entities
         public double Nitrite { get; set; }
         public double Nitrate { get; set; }
         public AquariumType Type { get; set; }
+        public string Description { get; set; } = null!;
     }
 }

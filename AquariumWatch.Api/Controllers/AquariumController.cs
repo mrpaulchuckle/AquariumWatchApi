@@ -12,16 +12,10 @@ namespace AquariumWatch.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AquariumController : ControllerBase
+    public class AquariumController(ISender sender, IMapper mapper) : ControllerBase
     {
-        private readonly ISender sender;
-        private readonly IMapper mapper;
-
-        public AquariumController(ISender sender, IMapper mapper)
-        {
-            this.sender = sender;
-            this.mapper = mapper;
-        }
+        private readonly ISender sender = sender;
+        private readonly IMapper mapper = mapper;
 
         [HttpGet(RouteConstants.Aquariums)]
         [ProducesResponseType(typeof(AquariumDto[]), StatusCodes.Status200OK)]
@@ -43,7 +37,7 @@ namespace AquariumWatch.Api.Controllers
         [HttpGet(RouteConstants.AquariumById)]
         [ProducesResponseType(typeof(AquariumDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<AquariumDto>> GetAquariumById(int id, CancellationToken cancellationToken)
+        public async Task<ActionResult<AquariumDto>> GetAquariumByIdAsync(int id, CancellationToken cancellationToken)
         {
             Aquarium? aquarium = await sender.Send(new GetAquariumById.Request(id), cancellationToken);
             return aquarium is null ? NotFound() : mapper.Map<AquariumDto>(aquarium);
@@ -51,10 +45,19 @@ namespace AquariumWatch.Api.Controllers
 
         [HttpDelete(RouteConstants.AquariumById)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult> DeleteAquarium(int id, CancellationToken cancellationToken)
+        public async Task<ActionResult> DeleteAquariumAsync(int id, CancellationToken cancellationToken)
         {
             await sender.Send(new DeleteAquariumById.Request(id), cancellationToken);
             return NoContent();
+        }
+
+        [HttpPut(RouteConstants.AquariumById)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> UpdateAquariumAsync([FromBody] UpdateAquariumRequestDto request, CancellationToken cancellationToken)
+        {
+            Aquarium? aquarium = await sender.Send(mapper.Map<UpdateAquarium.Request>(request), cancellationToken);
+            return aquarium is null ? NotFound() : NoContent();
         }
     }
 }

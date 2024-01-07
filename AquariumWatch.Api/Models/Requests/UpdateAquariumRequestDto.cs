@@ -3,8 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AquariumWatch.Api.Models.Requests
 {
-    public class CreateAquariumRequestDto
+    public class UpdateAquariumRequestDto
     {
+        [Required]
+        public int Id { get; set; }
+
         [Required]
         public string Name { get; set; } = null!;
 

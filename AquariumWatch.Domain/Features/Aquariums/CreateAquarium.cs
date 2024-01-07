@@ -7,23 +7,19 @@ namespace AquariumWatch.Domain.Features.Aquariums;
 
 public class CreateAquarium
 {
-    public record Request(string Name, AquariumType Type) : IRequest<Aquarium>;
+    public record Request(string Name, AquariumType Type, string Description) : IRequest<Aquarium>;
 
-    internal class Handler : IRequestHandler<Request, Aquarium>
+    internal class Handler(AquariumWatchDbContext dbContext) : IRequestHandler<Request, Aquarium>
     {
-        private readonly AquariumWatchDbContext dbContext;
-
-        public Handler(AquariumWatchDbContext dbContext)
-        {
-            this.dbContext = dbContext;
-        }
+        private readonly AquariumWatchDbContext dbContext = dbContext;
 
         public async Task<Aquarium> Handle(Request request, CancellationToken cancellationToken)
         {
             Aquarium aquarium = new()
             {
                 Name = request.Name,
-                Type = request.Type
+                Type = request.Type,
+                Description = request.Description
             };
 
             dbContext.Aquariums.Add(aquarium);
