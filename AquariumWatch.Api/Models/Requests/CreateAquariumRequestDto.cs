@@ -10,5 +10,8 @@ namespace AquariumWatch.Api.Models.Requests
 
         [Required]
         public AquariumType Type { get; set; }
+
+        [Required]
+        public string Description { get; set; } = null!;
     }
 }

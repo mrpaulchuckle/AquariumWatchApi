@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquariumWatch.Api", "Aquari
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquariumWatch.Data", "AquariumWatch.Data\AquariumWatch.Data.csproj", "{6F222091-E038-4B5E-8238-D01518E309FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AquariumWatch.Domain", "AquariumWatch.Domain\AquariumWatch.Domain.csproj", "{A3027489-4E21-4DF7-BA5C-161179BDC03B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquariumWatch.Domain", "AquariumWatch.Domain\AquariumWatch.Domain.csproj", "{A3027489-4E21-4DF7-BA5C-161179BDC03B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

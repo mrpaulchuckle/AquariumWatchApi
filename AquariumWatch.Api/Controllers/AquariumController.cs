@@ -12,16 +12,10 @@ namespace AquariumWatch.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AquariumController : ControllerBase
+    public class AquariumController(ISender sender, IMapper mapper) : ControllerBase
     {
-        private readonly ISender sender;
-        private readonly IMapper mapper;
-
-        public AquariumController(ISender sender, IMapper mapper)
-        {
-            this.sender = sender;
-            this.mapper = mapper;
-        }
+        private readonly ISender sender = sender;
+        private readonly IMapper mapper = mapper;
 
         [HttpGet(RouteConstants.Aquariums)]
         [ProducesResponseType(typeof(AquariumDto[]), StatusCodes.Status200OK)]
