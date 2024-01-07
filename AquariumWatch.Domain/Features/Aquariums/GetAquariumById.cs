@@ -9,14 +9,9 @@ public class GetAquariumById
 {
     public record Request(int AquariumId) : IRequest<Aquarium?>;
 
-    internal class Handler : IRequestHandler<Request, Aquarium?> 
+    internal class Handler(AquariumWatchDbContext dbContext) : IRequestHandler<Request, Aquarium?> 
     {
-        private readonly AquariumWatchDbContext dbContext;
-
-        public Handler(AquariumWatchDbContext dbContext)
-        {
-            this.dbContext = dbContext;
-        }
+        private readonly AquariumWatchDbContext dbContext = dbContext;
 
         public async Task<Aquarium?> Handle(Request request, CancellationToken cancellationToken)
         {

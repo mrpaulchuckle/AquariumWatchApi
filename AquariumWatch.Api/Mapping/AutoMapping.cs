@@ -17,6 +17,7 @@ namespace AquariumWatch.Api.Mapping
         private void MapRequestDtos()
         {
             CreateMap<CreateAquariumRequestDto, CreateAquarium.Request>();
+            CreateMap<UpdateAquariumRequestDto, UpdateAquarium.Request>();
         }
 
         private void MapResponseDtos()

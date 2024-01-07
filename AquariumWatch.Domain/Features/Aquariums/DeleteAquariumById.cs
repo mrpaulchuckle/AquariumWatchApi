@@ -9,18 +9,13 @@ public class DeleteAquariumById
 {
     public record Request(int Id) : IRequest;
 
-    internal class Handler : IRequestHandler<Request>
+    internal class Handler(AquariumWatchDbContext dbContext) : IRequestHandler<Request>
     {
-        private readonly AquariumWatchDbContext dbContext;
-
-        public Handler(AquariumWatchDbContext dbContext)
-        {
-            this.dbContext = dbContext;
-        }
+        private readonly AquariumWatchDbContext dbContext = dbContext;
 
         public async Task Handle(Request request, CancellationToken cancellationToken)
         {
-            Aquarium? aquarium = await dbContext.Aquariums.FirstOrDefaultAsync(a => a.Id ==  request.Id);
+            Aquarium? aquarium = await dbContext.Aquariums.FirstOrDefaultAsync(a => a.Id ==  request.Id, cancellationToken: cancellationToken);
 
             if (aquarium != null)
             {
