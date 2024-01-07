@@ -3,12 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AquariumWatch.Data
 {
-    public class AquariumWatchDbContext : DbContext
+    public class AquariumWatchDbContext(DbContextOptions<AquariumWatchDbContext> options) : DbContext(options)
     {
-        public AquariumWatchDbContext(DbContextOptions<AquariumWatchDbContext> options) : base(options)
-        {
-        }
-
         public DbSet<Aquarium> Aquariums { get; set; } = null!;
     }
 }
