@@ -22,10 +22,5 @@ namespace AquariumWatch.Api.Models.Responses
 
         [Required]
         public AquariumType Type { get; set; }
-
-        public double Ph { get; set; }
-        public double Ammonia { get; set; }
-        public double Nitrite { get; set; }
-        public double Nitrate { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace AquariumWatch.Domain.Features.Aquariums
 {
     public class UpdateAquarium
     {
-        public record Request(int Id, string Name, AquariumType Type, string Description) : IRequest<Aquarium?>;
+        public record Request(int Id, string Name, AquariumType Type, string Description, double HighTemp, double LowTemp) : IRequest<Aquarium?>;
 
         internal class Handler(AquariumWatchDbContext dbContext) : IRequestHandler<Request, Aquarium?>
         {
@@ -26,6 +26,8 @@ namespace AquariumWatch.Domain.Features.Aquariums
                 aquarium.Name = request.Name;
                 aquarium.Description = request.Description;
                 aquarium.Type = request.Type;
+                aquarium.HighTemp = request.HighTemp;
+                aquarium.LowTemp = request.LowTemp;
 
                 try
                 {

@@ -13,5 +13,11 @@ namespace AquariumWatch.Api.Models.Requests
 
         [Required]
         public string Description { get; set; } = null!;
+
+        [Required]
+        public double HighTemp { get; set; }
+
+        [Required]
+        public double LowTemp { get; set; }
     }
 }

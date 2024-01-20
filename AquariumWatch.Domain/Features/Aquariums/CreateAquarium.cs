@@ -7,7 +7,7 @@ namespace AquariumWatch.Domain.Features.Aquariums;
 
 public class CreateAquarium
 {
-    public record Request(string Name, AquariumType Type, string Description) : IRequest<Aquarium>;
+    public record Request(string Name, AquariumType Type, string Description, double HighTemp, double LowTemp) : IRequest<Aquarium>;
 
     internal class Handler(AquariumWatchDbContext dbContext) : IRequestHandler<Request, Aquarium>
     {
@@ -19,7 +19,9 @@ public class CreateAquarium
             {
                 Name = request.Name,
                 Type = request.Type,
-                Description = request.Description
+                Description = request.Description,
+                HighTemp = request.HighTemp,
+                LowTemp = request.LowTemp
             };
 
             dbContext.Aquariums.Add(aquarium);
